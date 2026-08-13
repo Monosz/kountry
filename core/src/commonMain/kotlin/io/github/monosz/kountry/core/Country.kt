@@ -61,10 +61,12 @@ data class Country(
         currencyCode?.let { getPlatformCurrencyName(it, locale) }
 
     /**
-     * Predefined country constants named by ISO 3166-1 alpha-3 codes
+     * Predefined country constants named by ISO 3166-1 alpha-3 codes.
+     *
+     * Do not edit this block by hand. Generate with: `./gradlew :core:generateCountries`
      */
     companion object {
-        // TODO: Add generator script
+        // ### BEGIN AUTO-GENERATED ###
         val AFG = Country("AF", "AFG", "004", "+93", "AFN")
         val ALA = Country("AX", "ALA", "248", "+358", "EUR")
         val ALB = Country("AL", "ALB", "008", "+355", "ALL")
@@ -333,5 +335,6 @@ data class Country(
             TON, TTO, TUN, TUR, TKM, TCA, TUV, UGA, UKR, ARE, GBR, USA, UMI, URY, UZB, VUT,
             VEN, VNM, VGB, VIR, WLF, ESH, YEM, ZMB, ZWE,
         )
+        // ### END AUTO-GENERATED ###
     }
 }

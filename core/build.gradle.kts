@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.vanniktech.mavenPublish)
     alias(libs.plugins.dokka)
+    id("io.github.monosz.kountry.generate-countries")
 }
 
 group = property("GROUP") as String
