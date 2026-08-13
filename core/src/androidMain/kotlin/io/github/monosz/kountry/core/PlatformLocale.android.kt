@@ -1,0 +1,25 @@
+package io.github.monosz.kountry.core
+
+import java.util.Currency
+import java.util.Locale
+
+private fun getAndroidLocale(locale: String?): Locale {
+    return locale?.let { Locale.forLanguageTag(it) } ?: Locale.getDefault()
+}
+
+internal actual fun getPlatformDisplayName(iso2: String, locale: String?): String {
+    val resolvedLocale = getAndroidLocale(locale)
+    return Locale("", iso2).getDisplayCountry(resolvedLocale)
+}
+
+internal actual fun getPlatformCurrencySymbol(currencyCode: String, locale: String?): String? =
+    runCatching {
+        val resolvedLocale = getAndroidLocale(locale)
+        Currency.getInstance(currencyCode).getSymbol(resolvedLocale)
+    }.getOrNull()
+
+internal actual fun getPlatformCurrencyName(currencyCode: String, locale: String?): String? =
+    runCatching {
+        val resolvedLocale = getAndroidLocale(locale)
+        Currency.getInstance(currencyCode).getDisplayName(resolvedLocale)
+    }.getOrNull()
