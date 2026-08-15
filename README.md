@@ -1,5 +1,8 @@
 # Kountry
 
+[![Maven Central - core](https://img.shields.io/maven-central/v/io.github.monosz/kountry-core?label=kountry-core)](https://central.sonatype.com/artifact/io.github.monosz/kountry-core)
+[![Maven Central - core-ui](https://img.shields.io/maven-central/v/io.github.monosz/kountry-core-ui?label=kountry-core-ui)](https://central.sonatype.com/artifact/io.github.monosz/kountry-core-ui)
+
 Lightweight Kotlin Multiplatform country metadata library, sourced from ISO 3166-1, ISO 4217 and E.164, with optional Compose Multiplatform components.
 
 Kountry also provides localized country and currency names and symbols using each platform's native locale APIs. It's meant for quick MVPs and prototypes, with emoji flags instead of image assets, but feel free to use it beyond that if you want to :)
