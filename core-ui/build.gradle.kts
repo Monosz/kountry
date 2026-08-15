@@ -43,12 +43,11 @@ kotlin {
             implementation(libs.compose.material3)
             implementation(libs.compose.ui)
             implementation(libs.compose.foundation)
-            implementation(libs.kotlinx.collections.immutable)
-            implementation(compose.components.resources)
             implementation(libs.compose.material.icons)
         }
 
         webMain.dependencies {
+            implementation(libs.compose.resources)
         }
     }
 }

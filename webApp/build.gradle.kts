@@ -27,7 +27,6 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
-            implementation(compose.components.resources)
         }
     }
 }
