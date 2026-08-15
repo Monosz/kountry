@@ -17,7 +17,3 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 node_modules/
-
-# Hide for now
-core-ui/
-scripts/

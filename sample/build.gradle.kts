@@ -38,7 +38,7 @@ kotlin {
 
         commonMain.dependencies {
             implementation(projects.core)
-            // implementation(projects.coreUi)
+            implementation(projects.coreUi)
 
             implementation(libs.compose.material3)
             implementation(libs.compose.ui)
@@ -51,11 +51,7 @@ kotlin {
 
 dependencies {
     dokka(projects.core)
-
-    // Hide core-ui for now
-    if (file("core-ui").exists()) {
-        dokka(projects.coreUi)
-    }
+    dokka(projects.coreUi)
 }
 
 dokka {

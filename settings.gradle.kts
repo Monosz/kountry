@@ -19,12 +19,8 @@ dependencyResolutionManagement {
 }
 
 include(":core")
-
-// Hide core-ui for now, only include sample if available
-if (file("core-ui").exists()) {
-    include(":core-ui")
-    include(":sample")
-    include(":androidApp")
-    include(":jvmApp")
-    include(":webApp")
-}
+include(":core-ui")
+include(":sample")
+include(":androidApp")
+include(":jvmApp")
+include(":webApp")
