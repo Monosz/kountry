@@ -44,9 +44,6 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material.icons)
-        }
-
-        webMain.dependencies {
             implementation(libs.compose.resources)
         }
     }

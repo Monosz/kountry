@@ -4,18 +4,23 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.ListItemElevation
 import androidx.compose.material3.ListItemShapes
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -46,6 +51,7 @@ import io.github.monosz.kountry.core.util.filterByQuery
  * @param locale BCP 47 language tag for localized content, or `null` for system default
  * @param searchField Search field content, or `null` to hide it
  * @param searchFilter Filters countries for the current query
+ * @param emptyContent Empty state content when no countries match the current query
  * @param itemContent Content for each country row
  */
 @Composable
@@ -64,6 +70,9 @@ fun KountryPicker(
     searchFilter: (query: String, countries: List<Country>) -> List<Country> = { query, countries ->
         countries.filterByQuery(query, locale, FilterField.country)
     },
+    emptyContent: @Composable () -> Unit = {
+        KountryPickerDefaults.EmptyContent()
+    },
     itemContent: @Composable (
         country: Country,
         selected: Boolean,
@@ -72,8 +81,8 @@ fun KountryPicker(
         KountryPickerDefaults.CountryItem(
             country = country,
             selected = selected,
-            locale = locale,
             onClick = onClick,
+            locale = locale,
         )
     },
 ) {
@@ -87,17 +96,24 @@ fun KountryPicker(
     ) {
         searchField?.invoke(query) { query = it }
 
-        Column(
-            modifier = Modifier
-                .weight(1f, false)
-                .verticalScroll(rememberScrollState()),
+        LazyColumn(
+            modifier = Modifier.weight(1f, false),
         ) {
-            filteredCountries.forEach { country ->
-                itemContent(
-                    country,
-                    country == selectedCountry,
-                    { onClick(country) },
-                )
+            if (filteredCountries.isEmpty()) {
+                item {
+                    emptyContent()
+                }
+            } else {
+                items(
+                    items = filteredCountries,
+                    key = { it.iso2 },
+                ) { country ->
+                    itemContent(
+                        country,
+                        country == selectedCountry,
+                        { onClick(country) },
+                    )
+                }
             }
         }
     }
@@ -126,14 +142,63 @@ object KountryPickerDefaults {
         OutlinedTextField(
             value = query,
             onValueChange = onQueryChange,
-            modifier = modifier.fillMaxWidth(),
-            trailingIcon = {
+            modifier = modifier.fillMaxWidth(0.95f),
+            leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = null,
                 )
             },
+            trailingIcon = if (query.isNotBlank()) {
+                {
+                    IconButton(
+                        onClick = { onQueryChange("") },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Clear,
+                            contentDescription = null,
+                        )
+                    }
+                }
+            } else {
+                null
+            },
+            shape = RoundedCornerShape(100),
         )
+    }
+
+    /**
+     * Default empty state for [KountryPicker] when no countries match the current query.
+     *
+     * @param modifier Modifier applied to the root column
+     * @param label Primary message
+     * @param description Optional supporting message below [label]
+     */
+    @Composable
+    fun EmptyContent(
+        modifier: Modifier = Modifier,
+        label: String = "No countries found",
+        description: String? = null,
+    ) {
+        Column(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(
+                space = 8.dp,
+                alignment = Alignment.CenterVertically,
+            ),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.titleMedium,
+            )
+            description?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
+        }
     }
 
     /**

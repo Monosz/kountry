@@ -97,6 +97,7 @@ private fun PickerItem(
 private class PickerPreviewParameterProvider : PreviewParameterProvider<PickerParameter> {
     override val values: Sequence<PickerParameter>
         get() = sequence {
+            yield(PickerParameter(countries = emptyList()))
             PickerVariant.entries.forEach {
                 yield(PickerParameter(it))
             }
@@ -104,7 +105,7 @@ private class PickerPreviewParameterProvider : PreviewParameterProvider<PickerPa
 }
 
 private data class PickerParameter(
-    val variant: PickerVariant,
+    val variant: PickerVariant = PickerVariant.Country,
     val countries: List<Country> = Kountry.all,
     val selectedCountry: Country? = null,
 )
