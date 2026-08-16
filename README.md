@@ -11,7 +11,7 @@ Kountry also provides localized country and currency names and symbols using eac
 
 ```kt
 dependencies {
-    val version = "0.0.1-rc.1"
+    val version = "0.0.1-rc.2"
     implementation("io.github.monosz:kountry-core:$version")
     // Optional CMP components
     implementation("io.github.monosz:kountry-core-ui:$version")
