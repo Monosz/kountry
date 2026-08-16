@@ -11,7 +11,7 @@ Kountry also provides localized country and currency names and symbols using eac
 
 ```kt
 dependencies {
-    val version = "0.0.1-rc.2"
+    val version = "0.0.1-rc.1"
     implementation("io.github.monosz:kountry-core:$version")
     // Optional CMP components
     implementation("io.github.monosz:kountry-core-ui:$version")
@@ -45,14 +45,14 @@ usa.currencySymbol()      // "US$"
 ```kt
 import androidx.compose.runtime.*
 import io.github.monosz.kountry.core.Country
-import io.github.monosz.kountry.core.ui.KountryPicker
+import io.github.monosz.kountry.core.ui.KountrySelector
 
 @Composable
 fun MyScreen() {
     var selectedCountry by remember { mutableStateOf<Country?>(null) }
-    KountryPicker(
-        onClick = { selectedCountry = it },
+    KountrySelector(
         selectedCountry = selectedCountry,
+        onCountrySelect = { selectedCountry = it },
     )
 }
 ```
