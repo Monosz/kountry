@@ -9,7 +9,10 @@ private fun getJvmLocale(locale: String?): Locale {
 
 internal actual fun getPlatformDisplayName(iso2: String, locale: String?): String {
     val resolvedLocale = getJvmLocale(locale)
-    return Locale("", iso2).getDisplayCountry(resolvedLocale)
+    return Locale.Builder()
+        .setRegion(iso2)
+        .build()
+        .getDisplayCountry(resolvedLocale)
 }
 
 internal actual fun getPlatformCurrencySymbol(currencyCode: String, locale: String?): String? =
