@@ -99,10 +99,10 @@ data class Country(
         val BGR = Country("BG", "BGR", "100", "+359", "EUR")
         val BFA = Country("BF", "BFA", "854", "+226", "XOF")
         val BDI = Country("BI", "BDI", "108", "+257", "BIF")
+        val CPV = Country("CV", "CPV", "132", "+238", "CVE")
         val KHM = Country("KH", "KHM", "116", "+855", "KHR")
         val CMR = Country("CM", "CMR", "120", "+237", "XAF")
         val CAN = Country("CA", "CAN", "124", "+1", "CAD")
-        val CPV = Country("CV", "CPV", "132", "+238", "CVE")
         val CYM = Country("KY", "CYM", "136", "+1", "KYD")
         val CAF = Country("CF", "CAF", "140", "+236", "XAF")
         val TCD = Country("TD", "TCD", "148", "+235", "XAF")
@@ -132,6 +132,7 @@ data class Country(
         val GNQ = Country("GQ", "GNQ", "226", "+240", "XAF")
         val ERI = Country("ER", "ERI", "232", "+291", "ERN")
         val EST = Country("EE", "EST", "233", "+372", "EUR")
+        val SWZ = Country("SZ", "SWZ", "748", "+268", "SZL")
         val ETH = Country("ET", "ETH", "231", "+251", "ETB")
         val FLK = Country("FK", "FLK", "238", "+500", "FKP")
         val FRO = Country("FO", "FRO", "234", "+298", "DKK")
@@ -193,7 +194,6 @@ data class Country(
         val LTU = Country("LT", "LTU", "440", "+370", "EUR")
         val LUX = Country("LU", "LUX", "442", "+352", "EUR")
         val MAC = Country("MO", "MAC", "446", "+853", "MOP")
-        val MKD = Country("MK", "MKD", "807", "+389", "MKD")
         val MDG = Country("MG", "MDG", "450", "+261", "MGA")
         val MWI = Country("MW", "MWI", "454", "+265", "MWK")
         val MYS = Country("MY", "MYS", "458", "+60", "MYR")
@@ -226,6 +226,7 @@ data class Country(
         val NGA = Country("NG", "NGA", "566", "+234", "NGN")
         val NIU = Country("NU", "NIU", "570", "+683", "NZD")
         val NFK = Country("NF", "NFK", "574", "+672", "AUD")
+        val MKD = Country("MK", "MKD", "807", "+389", "MKD")
         val MNP = Country("MP", "MNP", "580", "+1", "USD")
         val NOR = Country("NO", "NOR", "578", "+47", "NOK")
         val OMN = Country("OM", "OMN", "512", "+968", "OMR")
@@ -275,7 +276,6 @@ data class Country(
         val SDN = Country("SD", "SDN", "729", "+249", "SDG")
         val SUR = Country("SR", "SUR", "740", "+597", "SRD")
         val SJM = Country("SJ", "SJM", "744", "+47", "NOK")
-        val SWZ = Country("SZ", "SWZ", "748", "+268", "SZL")
         val SWE = Country("SE", "SWE", "752", "+46", "SEK")
         val CHE = Country("CH", "CHE", "756", "+41", "CHF")
         val SYR = Country("SY", "SYR", "760", "+963", "SYP")
@@ -316,18 +316,18 @@ data class Country(
         val all: List<Country> = listOf(
             AFG, ALA, ALB, DZA, ASM, AND, AGO, AIA, ATA, ATG, ARG, ARM, ABW, AUS, AUT, AZE,
             BHS, BHR, BGD, BRB, BLR, BEL, BLZ, BEN, BMU, BTN, BOL, BES, BIH, BWA, BVT, BRA,
-            IOT, BRN, BGR, BFA, BDI, KHM, CMR, CAN, CPV, CYM, CAF, TCD, CHL, CHN, CXR, CCK,
+            IOT, BRN, BGR, BFA, BDI, CPV, KHM, CMR, CAN, CYM, CAF, TCD, CHL, CHN, CXR, CCK,
             COL, COM, COG, COD, COK, CRI, CIV, HRV, CUB, CUW, CYP, CZE, DNK, DJI, DMA, DOM,
-            ECU, EGY, SLV, GNQ, ERI, EST, ETH, FLK, FRO, FJI, FIN, FRA, GUF, PYF, ATF, GAB,
-            GMB, GEO, DEU, GHA, GIB, GRC, GRL, GRD, GLP, GUM, GTM, GGY, GIN, GNB, GUY, HTI,
-            HMD, VAT, HND, HKG, HUN, ISL, IND, IDN, IRN, IRQ, IRL, IMN, ISR, ITA, JAM, JPN,
-            JEY, JOR, KAZ, KEN, KIR, PRK, KOR, KWT, KGZ, LAO, LVA, LBN, LSO, LBR, LBY, LIE,
-            LTU, LUX, MAC, MKD, MDG, MWI, MYS, MDV, MLI, MLT, MHL, MTQ, MRT, MUS, MYT, MEX,
+            ECU, EGY, SLV, GNQ, ERI, EST, SWZ, ETH, FLK, FRO, FJI, FIN, FRA, GUF, PYF, ATF,
+            GAB, GMB, GEO, DEU, GHA, GIB, GRC, GRL, GRD, GLP, GUM, GTM, GGY, GIN, GNB, GUY,
+            HTI, HMD, VAT, HND, HKG, HUN, ISL, IND, IDN, IRN, IRQ, IRL, IMN, ISR, ITA, JAM,
+            JPN, JEY, JOR, KAZ, KEN, KIR, PRK, KOR, KWT, KGZ, LAO, LVA, LBN, LSO, LBR, LBY,
+            LIE, LTU, LUX, MAC, MDG, MWI, MYS, MDV, MLI, MLT, MHL, MTQ, MRT, MUS, MYT, MEX,
             FSM, MDA, MCO, MNG, MNE, MSR, MAR, MOZ, MMR, NAM, NRU, NPL, NLD, NCL, NZL, NIC,
-            NER, NGA, NIU, NFK, MNP, NOR, OMN, PAK, PLW, PSE, PAN, PNG, PRY, PER, PHL, PCN,
-            POL, PRT, PRI, QAT, REU, ROU, RUS, RWA, BLM, SHN, KNA, LCA, MAF, SPM, VCT, WSM,
-            SMR, STP, SAU, SEN, SRB, SYC, SLE, SGP, SXM, SVK, SVN, SLB, SOM, ZAF, SGS, SSD,
-            ESP, LKA, SDN, SUR, SJM, SWZ, SWE, CHE, SYR, TWN, TJK, TZA, THA, TLS, TGO, TKL,
+            NER, NGA, NIU, NFK, MKD, MNP, NOR, OMN, PAK, PLW, PSE, PAN, PNG, PRY, PER, PHL,
+            PCN, POL, PRT, PRI, QAT, REU, ROU, RUS, RWA, BLM, SHN, KNA, LCA, MAF, SPM, VCT,
+            WSM, SMR, STP, SAU, SEN, SRB, SYC, SLE, SGP, SXM, SVK, SVN, SLB, SOM, ZAF, SGS,
+            SSD, ESP, LKA, SDN, SUR, SJM, SWE, CHE, SYR, TWN, TJK, TZA, THA, TLS, TGO, TKL,
             TON, TTO, TUN, TUR, TKM, TCA, TUV, UGA, UKR, ARE, GBR, USA, UMI, URY, UZB, VUT,
             VEN, VNM, VGB, VIR, WLF, ESH, YEM, ZMB, ZWE,
         )

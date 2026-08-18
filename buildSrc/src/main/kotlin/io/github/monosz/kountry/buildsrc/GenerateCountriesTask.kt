@@ -26,7 +26,7 @@ abstract class GenerateCountriesTask : DefaultTask() {
         val lines = csv.readText().lines().filter { it.isNotBlank() }
         require(lines.isNotEmpty()) { "CSV is empty: $csv" }
 
-        val required = listOf("iso2", "iso3", "countryCode", "callingCode", "currencyCode")
+        val required = listOf("name", "iso2", "iso3", "isoNumeric", "callingCode", "currencyCode")
         val header = lines.first().split(',')
         require(header == required) {
             "CSV header must be ${required.joinToString(",")}; was ${header.joinToString(",")}"
@@ -34,7 +34,7 @@ abstract class GenerateCountriesTask : DefaultTask() {
 
         val iso2List = mutableListOf<String>()
         val iso3List = mutableListOf<String>()
-        val countryCodeList = mutableListOf<String>()
+        val isoNumericList = mutableListOf<String>()
         val callingCodeList = mutableListOf<String>()
         val currencyCodeList = mutableListOf<String?>()
 
@@ -43,15 +43,15 @@ abstract class GenerateCountriesTask : DefaultTask() {
             require(cols.size == required.size) {
                 "CSV line ${index + 2} must have ${required.size} columns: $line"
             }
-            val iso2 = cols[0].trim()
-            val iso3 = cols[1].trim()
-            val countryCode = cols[2].trim()
-            val callingCode = cols[3].trim()
-            val currencyRaw = cols[4].trim()
+            val iso2 = cols[1].trim()
+            val iso3 = cols[2].trim()
+            val isoNumeric = cols[3].trim()
+            val callingCode = cols[4].trim()
+            val currencyRaw = cols[5].trim()
             require(iso2.matches(Regex("[A-Z]{2}"))) { "Invalid iso2 on line ${index + 2}: $iso2" }
             require(iso3.matches(Regex("[A-Z]{3}"))) { "Invalid iso3 on line ${index + 2}: $iso3" }
-            require(countryCode.matches(Regex("\\d{3}"))) {
-                "Invalid countryCode on line ${index + 2}: $countryCode"
+            require(isoNumeric.matches(Regex("\\d{3}"))) {
+                "Invalid isoNumeric on line ${index + 2}: $isoNumeric"
             }
             require(callingCode.matches(Regex("\\+\\d+"))) {
                 "Invalid callingCode on line ${index + 2}: $callingCode"
@@ -61,18 +61,18 @@ abstract class GenerateCountriesTask : DefaultTask() {
             }
             iso2List += iso2
             iso3List += iso3
-            countryCodeList += countryCode
+            isoNumericList += isoNumeric
             callingCodeList += callingCode
             currencyCodeList += currencyRaw.ifEmpty { null }
         }
 
         assertUnique("iso2", iso2List)
         assertUnique("iso3", iso3List)
-        assertUnique("countryCode", countryCodeList)
+        assertUnique("isoNumeric", isoNumericList)
 
         val constants = iso3List.indices.joinToString("\n") { i ->
             val currency = currencyCodeList[i]?.let { "\"$it\"" } ?: "null"
-            "${indent}val ${iso3List[i]} = Country(\"${iso2List[i]}\", \"${iso3List[i]}\", \"${countryCodeList[i]}\", \"${callingCodeList[i]}\", $currency)"
+            "${indent}val ${iso3List[i]} = Country(\"${iso2List[i]}\", \"${iso3List[i]}\", \"${isoNumericList[i]}\", \"${callingCodeList[i]}\", $currency)"
         }
         val allLines = iso3List.chunked(16).joinToString("\n") { chunk ->
             "$indent    ${chunk.joinToString(", ")},"
