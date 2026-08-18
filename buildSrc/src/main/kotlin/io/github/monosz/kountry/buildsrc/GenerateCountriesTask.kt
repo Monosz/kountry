@@ -80,7 +80,8 @@ abstract class GenerateCountriesTask : DefaultTask() {
         val generated = buildString {
             appendLine(constants)
             appendLine()
-            appendLine("${indent}internal val all: List<Country> = listOf(")
+            appendLine("${indent}/** List of all available countries */")
+            appendLine("${indent}val all: List<Country> = listOf(")
             appendLine(allLines)
             append("${indent})")
         }

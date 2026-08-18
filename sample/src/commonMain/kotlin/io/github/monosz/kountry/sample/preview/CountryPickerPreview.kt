@@ -12,16 +12,15 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import io.github.monosz.kountry.core.Country
-import io.github.monosz.kountry.core.Kountry
-import io.github.monosz.kountry.core.ui.KountryPicker
-import io.github.monosz.kountry.core.ui.KountryPickerDefaults
+import io.github.monosz.kountry.core.ui.CountryPicker
+import io.github.monosz.kountry.core.ui.CountryPickerDefaults
 import io.github.monosz.kountry.core.util.FilterField
 import io.github.monosz.kountry.core.util.filterByQuery
 import io.github.monosz.kountry.sample.SampleTheme
 
 @Preview(showBackground = true)
 @Composable
-private fun KountryPickerPreview(
+private fun CountryPickerPreview(
     @PreviewParameter(PickerPreviewParameterProvider::class)
     param: PickerParameter,
 ) {
@@ -29,7 +28,7 @@ private fun KountryPickerPreview(
     var selectedCountry by remember { mutableStateOf(param.selectedCountry) }
 
     SampleTheme {
-        KountryPicker(
+        CountryPicker(
             onClick = { selectedCountry = it },
             selectedCountry = selectedCountry,
             modifier = Modifier.padding(16.dp),
@@ -71,21 +70,21 @@ private fun PickerItem(
     locale: String? = null,
 ) {
     when (variant) {
-        PickerVariant.Country -> KountryPickerDefaults.CountryItem(
+        PickerVariant.Country -> CountryPickerDefaults.CountryItem(
             country = country,
             selected = selected,
             onClick = onClick,
             locale = locale,
         )
 
-        PickerVariant.Calling -> KountryPickerDefaults.CallingItem(
+        PickerVariant.Calling -> CountryPickerDefaults.CallingItem(
             country = country,
             selected = selected,
             onClick = onClick,
             locale = locale,
         )
 
-        PickerVariant.Currency -> KountryPickerDefaults.CurrencyItem(
+        PickerVariant.Currency -> CountryPickerDefaults.CurrencyItem(
             country = country,
             selected = selected,
             onClick = onClick,
@@ -106,7 +105,7 @@ private class PickerPreviewParameterProvider : PreviewParameterProvider<PickerPa
 
 private data class PickerParameter(
     val variant: PickerVariant = PickerVariant.Country,
-    val countries: List<Country> = Kountry.all,
+    val countries: List<Country> = Country.all,
     val selectedCountry: Country? = null,
 )
 

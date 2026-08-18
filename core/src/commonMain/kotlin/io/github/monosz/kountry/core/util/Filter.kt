@@ -29,7 +29,7 @@ fun List<Country>.filterByQuery(
                     country.iso3.contains(q, ignoreCase = true)
 
                 FilterField.CountryCode ->
-                    country.countryCode.contains(q, ignoreCase = true)
+                    country.isoNumeric.contains(q, ignoreCase = true)
 
                 FilterField.CallingCode ->
                     country.callingCode.contains(q, ignoreCase = true)

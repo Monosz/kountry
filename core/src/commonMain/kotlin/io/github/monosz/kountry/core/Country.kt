@@ -8,29 +8,25 @@ import kotlin.text.forEach
  *
  * @property iso2 ISO 3166-1 alpha-2 code (e.g., "US", "ID")
  * @property iso3 ISO 3166-1 alpha-3 code (e.g., "USA", "IDN")
- * @property countryCode ISO 3166-1 numeric code (e.g., "840", "360")
+ * @property isoNumeric ISO 3166-1 numeric code (e.g., "840", "360")
  * @property callingCode ITU-T E.164 country calling code with '+' prefix (e.g., "+1", "+62")
- * @property currencyCode ISO 4217 currency code, or null if none (e.g., "USD", null for Antarctica)
- *
- * @see <a href="https://www.iso.org/iso-3166-country-codes.html">ISO 3166 country codes</a>
- * @see <a href="https://www.iso.org/iso-4217-currency-codes.html">ISO 4217 currency codes</a>
- * @see <a href="https://www.itu.int/rec/T-REC-E.164">ITU-T E.164</a>
+ * @property currencyCode ISO 4217 currency code, or `null` if none (e.g., "USD", `null` for Antarctica)
  */
 @Immutable
 data class Country(
     val iso2: String,
     val iso3: String,
-    val countryCode: String,
+    val isoNumeric: String,
     val callingCode: String,
     val currencyCode: String?,
 ) {
     /** Unicode flag emoji derived from [iso2] */
     val flag: String = buildString {
         iso2.forEach { char ->
-            // Convert A-Z into the corresponding Regional Indicator code point.
+            // Convert A-Z into the corresponding Regional Indicator code point
             val codePoint = 0x1F1E6 + (char - 'A')
 
-            // Encode the code point as a UTF-16 surrogate pair.
+            // Encode the code point as a UTF-16 surrogate pair
             append(((codePoint - 0x10000) shr 10 or 0xD800).toChar())
             append(((codePoint - 0x10000) and 0x3FF or 0xDC00).toChar())
         }
@@ -39,7 +35,7 @@ data class Country(
     /**
      * Localized display name for this country.
      *
-     * @param locale BCP 47 language tag (e.g. `"en-US"`), or `null` for the system default.
+     * @param locale BCP 47 language tag (e.g. `"en-US"`), or `null` for the system default
      */
     fun displayName(locale: String? = null): String =
         getPlatformDisplayName(iso2, locale)
@@ -47,7 +43,7 @@ data class Country(
     /**
      * Localized currency symbol for [currencyCode], or `null` if unavailable.
      *
-     * @param locale BCP 47 language tag (e.g. `"en-US"`), or `null` for the system default.
+     * @param locale BCP 47 language tag (e.g. `"en-US"`), or `null` for the system default
      */
     fun currencySymbol(locale: String? = null): String? =
         currencyCode?.let { getPlatformCurrencySymbol(it, locale) }
@@ -55,17 +51,16 @@ data class Country(
     /**
      * Localized currency display name for [currencyCode], or `null` if unavailable.
      *
-     * @param locale BCP 47 language tag (e.g. `"en-US"`), or `null` for the system default.
+     * @param locale BCP 47 language tag (e.g. `"en-US"`), or `null` for the system default
      */
     fun currencyName(locale: String? = null): String? =
         currencyCode?.let { getPlatformCurrencyName(it, locale) }
 
     /**
-     * Predefined country constants named by ISO 3166-1 alpha-3 codes.
-     *
-     * Do not edit this block by hand. Generate with: `./gradlew :core:generateCountries`
+     * Predefined country constants from ISO 3166-1, named by its alpha-3 codes
      */
     companion object {
+        // Do not edit this block by hand. Generate with: `./gradlew :core:generateCountries`
         // ### BEGIN AUTO-GENERATED ###
         val AFG = Country("AF", "AFG", "004", "+93", "AFN")
         val ALA = Country("AX", "ALA", "248", "+358", "EUR")
@@ -317,7 +312,8 @@ data class Country(
         val ZMB = Country("ZM", "ZMB", "894", "+260", "ZMW")
         val ZWE = Country("ZW", "ZWE", "716", "+263", "ZWG")
 
-        internal val all: List<Country> = listOf(
+        /** List of all available countries */
+        val all: List<Country> = listOf(
             AFG, ALA, ALB, DZA, ASM, AND, AGO, AIA, ATA, ATG, ARG, ARM, ABW, AUS, AUT, AZE,
             BHS, BHR, BGD, BRB, BLR, BEL, BLZ, BEN, BMU, BTN, BOL, BES, BIH, BWA, BVT, BRA,
             IOT, BRN, BGR, BFA, BDI, KHM, CMR, CAN, CPV, CYM, CAF, TCD, CHL, CHN, CXR, CCK,
@@ -336,5 +332,45 @@ data class Country(
             VEN, VNM, VGB, VIR, WLF, ESH, YEM, ZMB, ZWE,
         )
         // ### END AUTO-GENERATED ###
+
+        /** Returns the country matching the given ISO 3166-1 alpha-2 code */
+        fun byIso2(code: String): Country? {
+            val normalized = code.trim().uppercase()
+            return byIso2Map[normalized]
+        }
+
+        /** Returns the country matching the given ISO 3166-1 alpha-3 code */
+        fun byIso3(code: String): Country? {
+            val normalized = code.trim().uppercase()
+            return byIso3Map[normalized]
+        }
+
+        /** Returns the country matching the given ISO 3166-1 numeric code */
+        fun byIsoNumeric(code: String): Country? {
+            val normalized = code.trim().padStart(3, '0')
+            return byIsoNumericMap[normalized]
+        }
+
+        /** Returns all countries that use the given ITU-T E.164 country calling code */
+        fun byCallingCode(callingCode: String): List<Country> {
+            val normalized = callingCode.trim().removePrefix("+")
+            return byCallingCodeMap["+$normalized"] ?: emptyList()
+        }
+
+        /** Returns all countries that use the given ISO 4217 currency code */
+        fun byCurrencyCode(code: String): List<Country> {
+            val normalized = code.trim().uppercase()
+            return byCurrencyCodeMap[normalized] ?: emptyList()
+        }
+
+        private val byIso2Map by lazy { all.associateBy { it.iso2 } }
+        private val byIso3Map by lazy { all.associateBy { it.iso3 } }
+        private val byIsoNumericMap by lazy { all.associateBy { it.isoNumeric } }
+        private val byCallingCodeMap by lazy { all.groupBy { it.callingCode } }
+        private val byCurrencyCodeMap by lazy {
+            all.mapNotNull { country ->
+                country.currencyCode?.let { it to country }
+            }.groupBy({ it.first }, { it.second })
+        }
     }
 }

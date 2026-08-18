@@ -16,13 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.monosz.kountry.core.Country
-import io.github.monosz.kountry.core.ui.KountrySelector
+import io.github.monosz.kountry.core.ui.CountrySelector
 import io.github.monosz.kountry.sample.SampleTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
-private fun KountrySelectorPreview() {
+private fun CountrySelectorPreview() {
     val locale = "id-ID"
     var selectedCountry by remember { mutableStateOf<Country?>(Country.USA) }
 
@@ -35,7 +35,7 @@ private fun KountrySelectorPreview() {
                     .padding(innerPadding)
                     .padding(16.dp),
             ) {
-                KountrySelector(
+                CountrySelector(
                     selectedCountry = selectedCountry,
                     onCountrySelect = { selectedCountry = it },
                     locale = locale,

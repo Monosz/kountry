@@ -35,10 +35,12 @@ import kotlinx.coroutines.launch
  * @param locale BCP 47 language tag for localized picker text, or `null` for system default
  * @param selectorPicker Picker content shown inside the bottom sheet
  * @param selectorField Clickable field content to toggle the picker
+ *
+ * @see CountryPicker
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun KountrySelector(
+fun CountrySelector(
     selectedCountry: Country?,
     onCountrySelect: (Country) -> Unit,
     modifier: Modifier = Modifier,
@@ -48,7 +50,7 @@ fun KountrySelector(
         selectedCountry: Country?,
         onCountrySelect: (Country) -> Unit,
     ) -> Unit = { selectedCountry, onCountrySelect ->
-        KountryPicker(
+        CountryPicker(
             selectedCountry = selectedCountry,
             onClick = onCountrySelect,
             modifier = Modifier
@@ -61,7 +63,7 @@ fun KountrySelector(
         country: Country?,
         onClick: () -> Unit,
     ) -> Unit = { country, onClick ->
-        KountrySelectorDefaults.SelectorField(
+        CountrySelectorDefaults.SelectorField(
             country = country,
             onClick = onClick,
             modifier = modifier,
@@ -114,9 +116,9 @@ fun SelectorBottomSheet(
 }
 
 /**
- * Default building blocks for [KountrySelector].
+ * Default building blocks for [CountrySelector]
  */
-object KountrySelectorDefaults {
+object CountrySelectorDefaults {
     /**
      * Default clickable field showing flag, localized name, and a dropdown affordance.
      *

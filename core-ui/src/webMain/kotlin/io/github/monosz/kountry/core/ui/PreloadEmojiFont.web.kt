@@ -31,7 +31,7 @@ import org.jetbrains.compose.resources.preloadFont
  */
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun PreloadResource(
+fun PreloadEmojiFont(
     loading: @Composable () -> Unit = { DefaultLoading() },
     content: @Composable () -> Unit,
 ) {

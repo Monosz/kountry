@@ -23,7 +23,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.monosz.kountry.core.Country
-import io.github.monosz.kountry.core.ui.KountrySelector
+import io.github.monosz.kountry.core.ui.CountrySelector
 
 @Composable
 fun SampleApp() {
@@ -88,7 +88,7 @@ private fun SampleScreen(
                 }
             }
 
-            KountrySelector(
+            CountrySelector(
                 selectedCountry = selectedCountry,
                 onCountrySelect = { selectedCountry = it },
                 modifier = Modifier.fillMaxWidth(),

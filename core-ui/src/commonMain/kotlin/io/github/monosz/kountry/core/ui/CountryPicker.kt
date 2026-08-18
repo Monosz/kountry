@@ -33,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.monosz.kountry.core.Country
-import io.github.monosz.kountry.core.Kountry
 import io.github.monosz.kountry.core.util.FilterField
 import io.github.monosz.kountry.core.util.filterByQuery
 
@@ -53,32 +52,34 @@ import io.github.monosz.kountry.core.util.filterByQuery
  * @param searchFilter Filters countries for the current query
  * @param emptyContent Empty state content when no countries match the current query
  * @param itemContent Content for each country row
+ *
+ * @see CountrySelector
  */
 @Composable
-fun KountryPicker(
+fun CountryPicker(
     onClick: (Country) -> Unit,
     selectedCountry: Country?,
     modifier: Modifier = Modifier,
-    countries: List<Country> = Kountry.all,
+    countries: List<Country> = Country.all,
     locale: String? = null,
     searchField: @Composable ((
         query: String,
         onQueryChange: (String) -> Unit,
     ) -> Unit)? = { query, onQueryChange ->
-        KountryPickerDefaults.SearchField(query, onQueryChange)
+        CountryPickerDefaults.SearchField(query, onQueryChange)
     },
     searchFilter: (query: String, countries: List<Country>) -> List<Country> = { query, countries ->
         countries.filterByQuery(query, locale, FilterField.country)
     },
     emptyContent: @Composable () -> Unit = {
-        KountryPickerDefaults.EmptyContent()
+        CountryPickerDefaults.EmptyContent()
     },
     itemContent: @Composable (
         country: Country,
         selected: Boolean,
         onClick: () -> Unit,
     ) -> Unit = { country, selected, onClick ->
-        KountryPickerDefaults.CountryItem(
+        CountryPickerDefaults.CountryItem(
             country = country,
             selected = selected,
             onClick = onClick,
@@ -120,14 +121,14 @@ fun KountryPicker(
 }
 
 /**
- * Default building blocks for [KountryPicker].
+ * Default building blocks for [CountryPicker].
  *
- * Use these as-is via the picker defaults, or pass them explicitly into [KountryPicker]
+ * Use these as-is via the picker defaults, or pass them explicitly into [CountryPicker]
  * slots when composing a custom layout.
  */
-object KountryPickerDefaults {
+object CountryPickerDefaults {
     /**
-     * Default search field for [KountryPicker].
+     * Default search field for [CountryPicker].
      *
      * @param query Current search query
      * @param onQueryChange Callback invoked when the query changes
@@ -168,7 +169,7 @@ object KountryPickerDefaults {
     }
 
     /**
-     * Default empty state for [KountryPicker] when no countries match the current query.
+     * Default empty state for [CountryPicker] when no countries match the current query.
      *
      * @param modifier Modifier applied to the root column
      * @param label Primary message

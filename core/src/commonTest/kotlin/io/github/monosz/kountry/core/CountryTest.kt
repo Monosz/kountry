@@ -4,8 +4,8 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class KountryTest {
-    private val countries = Kountry.all
+class CountryTest {
+    private val countries = Country.all
 
     @Test
     fun `all iso2 codes should be unique`() {
@@ -21,12 +21,12 @@ class KountryTest {
 
     @Test
     fun `all countryCode codes should be unique three-digit values`() {
-        val countryCodes = countries.map { it.countryCode }
+        val countryCodes = countries.map { it.isoNumeric }
         assertEquals(countryCodes.size, countryCodes.toSet().size, "Duplicate countryCode codes found")
         countries.forEach { country ->
             assertTrue(
-                country.countryCode.matches(Regex("\\d{3}")),
-                "countryCode must be 3 digits for ${country.iso2}, was ${country.countryCode}",
+                country.isoNumeric.matches(Regex("\\d{3}")),
+                "countryCode must be 3 digits for ${country.iso2}, was ${country.isoNumeric}",
             )
         }
     }
